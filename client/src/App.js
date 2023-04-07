@@ -5,6 +5,7 @@ import { themeSettings } from "theme";
 import { useMemo } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "scenes/dashboard";
+import CheckStatus from "scenes/checkstatus";
 import Layout from "scenes/layout";
 
 
@@ -20,6 +21,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />}/>
               <Route path="/dashboard" element={<Dashboard />}/>
+              <Route path="/checkstatus" element={<CheckStatus />}/>
             </Route>
           </Routes>
         </ThemeProvider>
