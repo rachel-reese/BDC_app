@@ -1,4 +1,4 @@
-let availableKeyWords= [ "Aaryan", "Dr.jianglee","Suprabhat","Rachel","Breathe DC","Sensors"];
+let availableKeyWords= [ "Aaryan", "Dr.Li","Suprabhat","Rachel","Breathe DC","Sensors"];
 
 const resultsBox = document.querySelector(".result-box");
 const inputBox = document.getElementById("input-box");

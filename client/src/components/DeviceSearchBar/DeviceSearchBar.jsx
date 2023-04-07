@@ -5,28 +5,26 @@ import { Button, Grid } from "@mui/material";
 
 const DeviceSearchBar = () => {
   const suggestionsList = [
-      "Aaryan",
-      "Dr.Li",
-      "Suprabhat",
-      "Rachel",
-      "Breathe DC",
-      "Sensors",
-    ];
+    "Aaryan",
+    "Dr.Li",
+    "Suprabhat",
+    "Rachel",
+    "Breathe DC",
+    "Sensors",
+  ];
   const [suggestions, setSuggestions] = useState({
     activeSuggestion: 0,
     filteredSuggestions: [],
     showSuggestions: false,
     userInput: "",
   });
-  const [status, setStatus] = useState("Unknown")
+  const [status, setStatus] = useState("Unknown");
   const handleCheckStatus = () => {
-
-    const options = ["Active", "Inactive"]
-    const choice = Math.floor(Math.random()*2)
-    setStatus(options[choice])
-  }
+    const options = ["Active", "Inactive"];
+    const choice = Math.floor(Math.random() * 2);
+    setStatus(options[choice]);
+  };
   const handleChange = (event) => {
-    
     const userInput = event.currentTarget.value;
 
     const filteredSuggestions = suggestionsList.filter(
@@ -50,10 +48,15 @@ const DeviceSearchBar = () => {
     });
   };
   return (
-    <Grid container direction="column" justifyContent="space-around" alignItems="center" spacing={5} >
+    <Grid
+      container
+      direction="column"
+      justifyContent="space-around"
+      alignItems="center"
+      spacing={5}
+    >
       <Grid item>
-<h1>Status: {status}</h1>
-
+        <h1>Status: {status}</h1>
       </Grid>
       <Grid item>
         <Grid
@@ -69,7 +72,7 @@ const DeviceSearchBar = () => {
                 <input
                   type="text"
                   id="input-box"
-                  placeholder="Search anything"
+                  placeholder="Enter Device Name"
                   autoComplete="off"
                   onChange={handleChange}
                   value={suggestions.userInput}
@@ -99,7 +102,13 @@ const DeviceSearchBar = () => {
           </Grid>
 
           <Grid item>
-            <Button style={{ height: "70px" }} variant="contained" onClick={handleCheckStatus} disabled={!suggestionsList.includes(suggestions.userInput)}>
+            <Button
+              disableElevation
+              style={{ height: "70px" }}
+              variant="contained"
+              onClick={handleCheckStatus}
+              disabled={!suggestionsList.includes(suggestions.userInput)}
+            >
               Check Status!
             </Button>
           </Grid>
