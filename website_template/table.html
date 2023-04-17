@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><Table></Table></title>
+</head>
+
+
+<style>
+    .content-table {
+        border-collapse: collapse;
+        margin: auto;
+        font-size: 1em;
+        min-width: 500px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0 , 0 , 0, 0.15);
+        
+
+
+    }
+    .content-table thead tr{
+        background-color: #1820be;
+        color: #fff;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .content-table th,
+    .content-table td{
+        padding: 12px 15px;
+    }
+    
+    .content-table tbody tr{
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .content-table tbody tr:nth-of-type(even){
+        background-color: #f3f3f3;
+    }
+    
+    .content-table tbody tr:last-of-type{
+        border-bottom: 3px solid #1820be;
+    }
+
+    .content-table tbody tr.active-row{
+        font-weight: bold;
+        color: #1820be;
+    }
+
+    body h1{
+        margin: auto;
+        color: #1820be;
+        text-align: center;
+    }
+</style>
+
+
+
+
+<body>
+    <h1>Atmo Cube Dashboard</h1>
+
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Parameters</th>
+                <th>Values</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>IAQI</td>
+                <td>57</td>
+            </tr>
+            <tr class="active-row">
+                <td>2</td>
+                <td>Temperature</td>
+                <td>24.08 C</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Humidity</td>
+                <td>52.36%</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Abs. Humidity</td>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>NOx index</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>VOC index</td>
+                <td>99</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>CO2</td>
+                <td>1089 ppm</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>PM1</td>
+                <td>18.7</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>PM2.5</td>
+                <td>19.8</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>PM10</td>
+                <td>19.8</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>PM4</td>
+                <td>19.8</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>IAQI</td>
+                <td>57</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>Noise</td>
+                <td>53 db</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>CH20</td>
+                <td>0.010 ppm</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>Light</td>
+                <td>16 Lux</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>Pressure</td>
+                <td>1009.17</td>
+            </tr>
+        </tbody> 
+    </table>
+    
+</body>
+</html>
