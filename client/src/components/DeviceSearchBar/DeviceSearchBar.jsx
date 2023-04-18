@@ -5,14 +5,7 @@ import { Button, CircularProgress, Grid } from "@mui/material";
 import axios from "axios";
 
 const DeviceSearchBar = () => {
-  const suggestionsList = [
-    "Aaryan",
-    "Dr.Li",
-    "Suprabhat",
-    "Rachel",
-    "Breathe DC",
-    "Sensors",
-  ];
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,11 +16,11 @@ const DeviceSearchBar = () => {
       async function getDeviceMap() {
         setIsLoading(true);
 
-        const res = await axios.get(
-          "http://localhost:5000/airQuality/getDeviceID"
-        );
 
-        setSuggestionsList(res.data);
+        fetch("/airQuality/getDeviceID")
+          .then((res) => res.json())
+          .then((data) => setSuggestionsList(data));
+
         setIsLoading(false);
       },
     []
@@ -41,14 +34,21 @@ const DeviceSearchBar = () => {
   });
   const [status, setStatus] = useState("UNKNOWN");
   const handleCheckStatus = async () => {
+    setIsLoading(true);
+    const res = await axios.get("/general/getDeviceStatus", {
+      params: { deviceID: suggestionList[suggestions.userInput] },
+    });
 
-    setIsLoading(true)
-    const res = await axios.get(
-      "http://localhost:5000/general/getDeviceStatus",
-      { params: { deviceID: suggestionList[suggestions.userInput] } }
-    );
+    fetch(
+      "/airQuality/getDeviceID?" +
+      new URLSearchParams({
+        deviceID: suggestionList[suggestions.userInput],
+      })
+    )
+      .then((res) => res.json())
+      .then((data) => setStatus(data.toUpperCase()));
     setStatus(res.data.toUpperCase());
-    setIsLoading(false)
+    setIsLoading(false);
   };
   const handleChange = (event) => {
     const userInput = event.currentTarget.value;

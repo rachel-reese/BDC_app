@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "scenes/dashboard";
 import CheckStatus from "scenes/checkstatus";
+import AirQuality from "scenes/airquality";
 import Layout from "scenes/layout";
 
 
@@ -16,12 +17,13 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <CssBaseline/>
+          <CssBaseline />
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />}/>
-              <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/checkstatus" element={<CheckStatus />}/>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/checkstatus" element={<CheckStatus />} />
+              <Route path="/airquality" element={<AirQuality />} />
             </Route>
           </Routes>
         </ThemeProvider>
