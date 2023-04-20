@@ -8,6 +8,7 @@ import Dashboard from "scenes/dashboard";
 import CheckStatus from "scenes/checkstatus";
 import AirQuality from "scenes/airquality";
 import Layout from "scenes/layout";
+import HomePage from "scenes/home";
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/checkstatus" element={<CheckStatus />} />
               <Route path="/airquality" element={<AirQuality />} />
