@@ -12,17 +12,14 @@ const DeviceSearchBar = () => {
   const [suggestionList, setSuggestionsList] = useState({});
 
   useEffect(
-    () =>
-      async function getDeviceMap() {
-        setIsLoading(true);
+    () => {
+      setIsLoading(true);
+      fetch("http://localhost:5000/api/airQuality/getDeviceID")
+        .then((res) => res.json())
+        .then((data) => setSuggestionsList(data));
 
-
-        fetch("/airQuality/getDeviceID")
-          .then((res) => res.json())
-          .then((data) => setSuggestionsList(data));
-
-        setIsLoading(false);
-      },
+      setIsLoading(false);
+    },
     []
   );
 
@@ -35,19 +32,16 @@ const DeviceSearchBar = () => {
   const [status, setStatus] = useState("UNKNOWN");
   const handleCheckStatus = async () => {
     setIsLoading(true);
-    const res = await axios.get("/general/getDeviceStatus", {
-      params: { deviceID: suggestionList[suggestions.userInput] },
-    });
+
 
     fetch(
-      "/airQuality/getDeviceID?" +
+      "http://localhost:5000/api/general/getDeviceStatus?" +
       new URLSearchParams({
         deviceID: suggestionList[suggestions.userInput],
       })
     )
       .then((res) => res.json())
-      .then((data) => setStatus(data.toUpperCase()));
-    setStatus(res.data.toUpperCase());
+      .then((data) => setStatus(data.status.toUpperCase()));
     setIsLoading(false);
   };
   const handleChange = (event) => {
