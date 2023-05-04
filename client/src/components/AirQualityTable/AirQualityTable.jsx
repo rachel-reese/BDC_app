@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Button } from "@mui/material";
 import "./AirQualityTable.css";
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -9,18 +9,14 @@ const AirQualityTable = () => {
   const [airQualityData, setAirQualityData] = useState({});
 
   useEffect(
-    () =>
-      async function getDeviceMap() {
-        setIsLoading(true);
+    () => {
+      setIsLoading(true);
+      fetch("http://localhost:5000/api/airQuality/getAirQualityData")
+        .then((res) => res.json())
+        .then((data) => setAirQualityData(data));
 
-
-        // fetch("/airQuality/getAirQualityData")
-        //   .then((res) => res.json())
-        //   .then((data) => setAirQualityData(data));
-        let aqd = await getSensorMeasurements();
-        setAirQualityData(aqd[0]);
-        setIsLoading(false);
-      },
+      setIsLoading(false);
+    },
     []
   );
   console.log(airQualityData);
@@ -40,7 +36,6 @@ const AirQualityTable = () => {
   
   return (
     <>
-
       {isLoading ? (<CircularProgress />) :
 
         (
@@ -60,11 +55,11 @@ const AirQualityTable = () => {
 
                 {Object.keys(airQualityData).map((item, idx) => {
                   return (
-                    <tr key={item}>
+                    <tr key={item[1][1] + idx}>
 
                       <td>{idx + 1}</td>
-                      <td>{item}</td>
-                      <td>{airQualityData[item]}</td>
+                      <td>{item[1][1]}</td>
+                      <td>{item[1][0] + item[1][2]}</td>
                     </tr>
 
                   )
