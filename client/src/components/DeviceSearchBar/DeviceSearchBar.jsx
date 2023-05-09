@@ -40,8 +40,8 @@ const DeviceSearchBar = () => {
         deviceID: suggestionList[suggestions.userInput],
       })
     )
-      .then((res) => res.text())
-      .then((data) => setStatus(data.toUpperCase()));
+      .then((res) => res.json())
+      .then((data) => setStatus(data.status.toUpperCase()));
     setIsLoading(false);
   };
   const handleChange = (event) => {
