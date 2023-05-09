@@ -14,7 +14,7 @@ const DeviceSearchBar = () => {
   useEffect(
     () => {
       setIsLoading(true);
-      fetch("http://iaq.hucs.ml:5000/airQuality/getDeviceID")
+      fetch("https://iaq.hucs.ml/airQuality/getDeviceID")
         .then((res) => res.json())
         .then((data) => setSuggestionsList(data));
 
@@ -35,7 +35,7 @@ const DeviceSearchBar = () => {
 
 
     fetch(
-      "http://iaq.hucs.ml:5000/general/getDeviceStatus?" +
+      "https://iaq.hucs.ml/general/getDeviceStatus?" +
       new URLSearchParams({
         deviceID: suggestionList[suggestions.userInput],
       })
