@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "http://iaq.hucs.ml:5000"
   "dependencies": {
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
