@@ -10,7 +10,7 @@ const getDeviceID = (req, res) => {
 
     const device_word = {}
     for (let [idx, device] of response.data.entries()){
-      device_word[listOfWords[idx]] = device.id
+      device_word[listOfWords[idx]] = device.device_id
     }
     res.send(device_word)
 

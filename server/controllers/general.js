@@ -14,6 +14,7 @@ async function getDevices() {
   }
 
   const devices = await axios.request(config);
+  console.log(devices)
 
   return devices;
 }
@@ -26,11 +27,11 @@ const getDeviceStatus = (req, res) => {
     const device_word = {}
     for (let [idx, device] of response.data.entries()){
 
-      if ([device.id == deviceID]){
-        res.send({status: device.status})
+      if ([device.device_id == deviceID]){
+        return res.send({status: device.status})
       }
     }
-    res.send({status: "not found"})
+    return res.send({status: "not found"})
 
   }) 
   
