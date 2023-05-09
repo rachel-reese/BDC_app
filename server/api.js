@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGO_URL, {
 const conn = mongoose.connection;
 
 async function getMeasurements() {
+  console.log(ATMO_KEY)
   const config_latest_measurements = { 
     method: 'GET',
     url: `https://api.atmocube.app/v1/public/latest_measurements/`,

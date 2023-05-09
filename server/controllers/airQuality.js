@@ -1,15 +1,45 @@
+import axios from "axios";
+import dotenv from 'dotenv';
+dotenv.config();
+import randomWords from "random-words"
+
 const getDeviceID = (req, res) => {
-  res.send({
-    alpha: "124677080",
-    beta: "10395607",
-    gamma: "6045604",
-    theta: "45668756",
-  });
+
+  const listOfWords = randomWords({exactly:300, seed:"my-seed"})
+  getDevices().then((response) => {
+
+    const device_word = {}
+    for (let [idx, device] of response.data.entries()){
+      device_word[listOfWords[idx]] = device.id
+    }
+    res.send(device_word)
+
+  })
+
 };
 
+const ATMO_KEY = process.env.ATMO_KEY;
+
+async function getDevices() {
+  const config = {
+    method: 'GET',
+    url: `https://api.atmocube.app/v1/public/devices/`,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': `APIKey ${ATMO_KEY}`,
+    }
+  }
+
+  const devices = await axios.request(config);
+
+  return devices;
+}
 const getAirQualityData = (req, res) => {
+
+
+  getDevices().then((res) => console.log(res.data))
   res.send({
-    iaqi: [57,"IAQI", ""],
+    iaqi: [57, "IAQI", ""],
     temperature: [24.08, "Temperature", "°C"],
     humidity: [52.36, "Humidity", "%"],
     abs_humidity: [9, "Abs. Humidity", ""],

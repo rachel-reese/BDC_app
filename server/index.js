@@ -1,8 +1,8 @@
+import dotenv from 'dotenv';
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import clientRoutes from "./routes/client.js";
@@ -11,6 +11,7 @@ import managementRoutes from "./routes/management.js";
 import airQualityRoutes from "./routes/airQuality.js";
 import path from "path";
 import { fileURLToPath } from 'url';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -50,3 +51,4 @@ app.get("*", (req, res) => {
 const PORT = 5000;
 
 app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
