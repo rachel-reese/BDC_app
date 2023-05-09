@@ -11,7 +11,7 @@ const AirQualityTable = () => {
   useEffect(
     () => {
       setIsLoading(true);
-      fetch("http://localhost:5000/api/airQuality/getAirQualityData")
+      fetch("http://iaq.hucs.ml:5000/airQuality/getAirQualityData")
         .then((res) => res.json())
         .then((data) => setAirQualityData(data));
 
@@ -24,7 +24,7 @@ const AirQualityTable = () => {
   async function getSensorMeasurements() { 
     const options = {
       method: "GET",
-      url: `http://localhost:5001/api/latest_measurements`,
+      url: `http://iaq.hucs.ml/latest_measurements`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,12 +54,13 @@ const AirQualityTable = () => {
               <tbody>
 
                 {Object.keys(airQualityData).map((item, idx) => {
+                  console.log(item)
                   return (
-                    <tr key={item[1][1] + idx}>
+                    <tr key={item + idx}>
 
                       <td>{idx + 1}</td>
-                      <td>{item[1][1]}</td>
-                      <td>{item[1][0] + item[1][2]}</td>
+                      <td>{airQualityData[item][1]}</td>
+                      <td>{airQualityData[item][0] + airQualityData[item][2]}</td>
                     </tr>
 
                   )

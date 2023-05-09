@@ -7,7 +7,7 @@ const getDeviceStatus = (req, res) => {
     6045604: "inactive",
     45668756: "active",
   };
-  res.send(status[deviceID]);
+  res.send({status: status[deviceID]});
 };
 
 export { getDeviceStatus };

@@ -14,7 +14,7 @@ const DeviceSearchBar = () => {
   useEffect(
     () => {
       setIsLoading(true);
-      fetch("http://localhost:5000/api/airQuality/getDeviceID")
+      fetch("http://iaq.hucs.ml:5000/airQuality/getDeviceID")
         .then((res) => res.json())
         .then((data) => setSuggestionsList(data));
 
@@ -35,13 +35,13 @@ const DeviceSearchBar = () => {
 
 
     fetch(
-      "http://localhost:5000/api/general/getDeviceStatus?" +
+      "http://iaq.hucs.ml:5000/general/getDeviceStatus?" +
       new URLSearchParams({
         deviceID: suggestionList[suggestions.userInput],
       })
     )
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status.toUpperCase()));
+      .then((res) => res.text())
+      .then((data) => setStatus(data.toUpperCase()));
     setIsLoading(false);
   };
   const handleChange = (event) => {
