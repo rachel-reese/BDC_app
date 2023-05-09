@@ -23,11 +23,12 @@ const getDeviceStatus = (req, res) => {
   const deviceID = req.query.deviceID;
 
    getDevices().then((response) => {
+    console.log(deviceID)
 
-    const device_word = {}
     for (let [idx, device] of response.data.entries()){
 
-      if ([device.device_id == deviceID]){
+      if (device.device_id == deviceID){
+        console.log(device.device_id, deviceID)
         return res.send({status: device.status})
       }
     }
