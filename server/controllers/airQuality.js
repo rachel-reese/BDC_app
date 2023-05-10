@@ -4,12 +4,11 @@ dotenv.config();
 import randomWords from "random-words"
 
 const getDeviceID = (req, res) => {
-
-  const listOfWords = randomWords({exactly:300, seed:"my-seed"})
+  const listOfWords = randomWords({ exactly: 300, seed: "my-seed" })
   getDevices().then((response) => {
 
     const device_word = {}
-    for (let [idx, device] of response.data.entries()){
+    for (let [idx, device] of response.data.entries()) {
       device_word[listOfWords[idx]] = device.device_id
     }
     res.send(device_word)
@@ -29,32 +28,68 @@ async function getDevices() {
       'Authorization': `APIKey ${ATMO_KEY}`,
     }
   }
-
   const devices = await axios.request(config);
-
   return devices;
+}
+async function getMeasurements() {
+  const config_latest_measurements = {
+    method: 'GET',
+    url: `https://api.atmocube.app/v1/public/latest_measurements/`,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': `APIKey ${ATMO_KEY}`,
+    }
+  };
+  const latest_measurements = await axios.request(config_latest_measurements);
+  var rows = [];
+
+  for (const key in latest_measurements.data) {
+    var old = latest_measurements.data[key];
+    var new_row = { id: key, ...old };
+    rows.push(new_row);
+  }
+  return rows;
 }
 const getAirQualityData = (req, res) => {
 
+  const deviceID = req.query.deviceID;
+  let dataTable = {
+    iaqi: ["IAQI", ""],
+    temperature: ["Temperature", "°C"],
+    humidity: ["Humidity", "%"],
+    abs_humidity: ["Abs. Humidity", ""],
+    noxindex: ["NOx Index", ""],
+    vocindex: ["VOC Index", ""],
+    co2: ["CO2", " ppm"],
+    pm1: ["PM1", ""],
+    pm25: ["PM2.5", ""],
+    pm10: ["PM10", ""],
+    pm4: ["PM4", ""],
+    noise: ["Noise", " db"],
+    ch2o: ["CH2O", " ppm"],
+    light: ["Light", " Lux"],
+    pressure: ["Pressure", ""],
+  }
 
-  getDevices().then((res) => console.log(res.data))
-  res.send({
-    iaqi: [57, "IAQI", ""],
-    temperature: [24.08, "Temperature", "°C"],
-    humidity: [52.36, "Humidity", "%"],
-    abs_humidity: [9, "Abs. Humidity", ""],
-    nox_index: [1, "NOx Index", ""],
-    voc_index: [99, "VOC Index", ""],
-    co2: [1089, "CO2", " ppm"],
-    pm1: [18.7, "PM1", ""],
-    pm_2_5: [19.8, "PM2.5", ""],
-    pm_10: [19.8, "PM10", ""],
-    pm_4: [19.8, "PM4", ""],
-    noise: [53, "Noise", " db"],
-    ch2o: [0.010, "CH2O", " ppm"],
-    light: [16, "Light", " Lux"],
-    pressure: [1009.17, "Pressure", ""],
-  });
+
+  getDevices().then((response) => {
+    for (let device of response.data) {
+      if (device.device_id == deviceID) {
+        const id = device.id
+        getMeasurements().then((measurements) => {
+          for (let device of measurements) {
+            if (device.id == id) {
+              for (let [key, value] of Object.entries(dataTable)) {
+                dataTable[key] = [device[key], ...value]
+              }
+              return res.send({dataTable})
+            }
+          }
+        }
+        )
+      }
+    }
+  })
 };
 
 export { getDeviceID, getAirQualityData };
