@@ -11,7 +11,11 @@ const AirQualityTable = () => {
   useEffect(
     () => {
       setIsLoading(true);
-      fetch("https://iaq.hucs.ml/airQuality/getAirQualityData")
+      fetch("https://iaq.hucs.ml/airQuality/getAirQualityData?" +
+        new URLSearchParams({
+          deviceID: "4c75255d12d8",
+        })
+      )
         .then((res) => res.json())
         .then((data) => setAirQualityData(data));
 
@@ -21,7 +25,7 @@ const AirQualityTable = () => {
   );
   console.log(airQualityData);
 
-  async function getSensorMeasurements() { 
+  async function getSensorMeasurements() {
     const options = {
       method: "GET",
       url: `https://iaq.hucs.ml/latest_measurements`,
@@ -33,7 +37,7 @@ const AirQualityTable = () => {
     return response.data;
   }
 
-  
+
   return (
     <>
       {isLoading ? (<CircularProgress />) :

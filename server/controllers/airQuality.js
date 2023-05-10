@@ -82,7 +82,7 @@ const getAirQualityData = (req, res) => {
               for (let [key, value] of Object.entries(dataTable)) {
                 dataTable[key] = [device[key], ...value]
               }
-              return res.send({dataTable})
+              return res.send(dataTable)
             }
           }
         }
