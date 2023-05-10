@@ -5,23 +5,13 @@ import { Button, CircularProgress, Grid } from "@mui/material";
 import axios from "axios";
 
 const DeviceSearchBar = () => {
-
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [suggestionList, setSuggestionsList] = useState({});
 
-  useEffect(
-    () => {
-      setIsLoading(true);
-      fetch("https://iaq.hucs.ml/airQuality/getDeviceID")
-        .then((res) => res.json())
-        .then((data) => setSuggestionsList(data));
+  const [airQualityData, setAirQualityData] = useState({});
 
-      setIsLoading(false);
-    },
-    []
-  );
+  const [status, setStatus] = useState("UNKNOWN");
 
   const [suggestions, setSuggestions] = useState({
     activeSuggestion: 0,
@@ -29,11 +19,24 @@ const DeviceSearchBar = () => {
     showSuggestions: false,
     userInput: "",
   });
-  const [status, setStatus] = useState("UNKNOWN");
+
+
+  // Load the device_name:device_id map on init
+  useEffect(
+    () => {
+      setIsLoading(true);
+      fetch("https://iaq.hucs.ml/airQuality/getDeviceID")
+        .then((res) => res.json())
+        .then((data) => setSuggestionsList(data));
+      setIsLoading(false);
+    },
+    []
+  );
+
+
+  // get device status and air quality data when the button is pressed
   const handleCheckStatus = async () => {
     setIsLoading(true);
-
-
     fetch(
       "https://iaq.hucs.ml/general/getDeviceStatus?" +
       new URLSearchParams({
@@ -42,8 +45,17 @@ const DeviceSearchBar = () => {
     )
       .then((res) => res.json())
       .then((data) => setStatus(data.status.toUpperCase()));
+    fetch("https://iaq.hucs.ml/airQuality/getAirQualityData?" +
+      new URLSearchParams({
+        deviceID: suggestionList[suggestions.userInput],
+      })
+    )
+      .then((res) => res.json())
+      .then((data) => setAirQualityData(data));
     setIsLoading(false);
   };
+
+  // update the state of suggestions as the user types
   const handleChange = (event) => {
     const userInput = event.currentTarget.value;
 
@@ -59,6 +71,9 @@ const DeviceSearchBar = () => {
       userInput: event.currentTarget.value,
     });
   };
+
+
+  // set the current user input to user's selection from the suggestion box
   const handleListClick = (item) => {
     setSuggestions({
       activeSuggestion: 0,
@@ -70,6 +85,8 @@ const DeviceSearchBar = () => {
       setStatus("UNKNOWN");
     }
   };
+
+
   return (
     <Grid
       container
@@ -147,6 +164,37 @@ const DeviceSearchBar = () => {
                 </Button>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item>
+            {
+              Object.keys(airQualityData).length == 0 ? <></> :
+                <div className="main">
+                  <h1>Most Recent Air Quality Data</h1>
+                  <table className="content-table">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Parameters</th>
+                        <th>Values</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      {Object.keys(airQualityData).map((item, idx) => {
+                        return (
+                          <tr key={item + idx}>
+                            <td>{idx + 1}</td>
+                            <td>{airQualityData[item][1]}</td>
+                            <td>{airQualityData[item][0] + airQualityData[item][2]}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </ div>
+            }
+
+
           </Grid>
         </>
       )}

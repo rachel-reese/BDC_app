@@ -23,19 +23,7 @@ const AirQualityTable = () => {
     },
     []
   );
-  console.log(airQualityData);
 
-  async function getSensorMeasurements() {
-    const options = {
-      method: "GET",
-      url: `https://iaq.hucs.ml/latest_measurements`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-    const response = await axios.request(options);
-    return response.data;
-  }
 
 
   return (
